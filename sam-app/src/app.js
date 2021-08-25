@@ -14,6 +14,16 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
+
+const AWS = require('aws-sdk');
+require('dotenv').config();
+const uuid = require('uuid');
+
+AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
+if (process.env.LOCAL_DYNAMODB_ENDPOINT) { AWS.config.update({ dynamodb: { endpoint: LOCAL_DYNAMODB_ENDPOINT } }) }
+
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 exports.lambdaHandler = async (event, context) => {
     try {
         // const ret = await axios(url);

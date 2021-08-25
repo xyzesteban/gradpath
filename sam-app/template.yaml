@@ -1,19 +1,43 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  sam-app
+  gradpath-sam
 
-  Sample SAM Template for sam-app
+  SAM Template for Gradpath SIS Back-End
   
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS,POST,GET'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
   Function:
     Timeout: 3
+    Environment:
+      Variables:
+        REGION: 'us-east-2'
 
 Resources:
-  HelloWorldFunction:
+  Index:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: src/lambda
+      Handler: app.handler
+      Runtime: nodejs14.x-v1
+      PackageType: Image
+      Policies: AmazonDynamoDBReadOnlyAccess
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+  GradpathGetAllCourses:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/lambda/Course-GET-ReadAllCourses
+      Handler: index.handler
       PackageType: Image
       Events:
         HelloWorld:
@@ -30,12 +54,6 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
+  GradpathApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn

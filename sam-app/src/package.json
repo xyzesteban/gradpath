@@ -1,0 +1,22 @@
+{
+  "name": "gradpath-sam",
+  "version": "1.0.0",
+  "description": "Gradpath SIS Back-End (SAM App) for Development",
+  "main": "app.js",
+  "repository": "https://github.com/xyzes/gradpath",
+  "author": "Esteban D. Espinoza",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.975.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
