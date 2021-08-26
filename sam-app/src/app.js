@@ -17,20 +17,19 @@ let response;
 
 const AWS = require('aws-sdk');
 require('dotenv').config();
-const uuid = require('uuid');
 
 AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
-if (process.env.LOCAL_DYNAMODB_ENDPOINT) { AWS.config.update({ dynamodb: { endpoint: LOCAL_DYNAMODB_ENDPOINT } }) }
+if (process.env.AWS_SAM_LOCAL) { AWS.config.update({ dynamodb: { endpoint: LOCAL_DYNAMODB_ENDPOINT } }) }
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-exports.lambdaHandler = async (event, context) => {
+module.exports.handler = async (event, context) => {
     try {
         // const ret = await axios(url);
         response = {
             'statusCode': 200,
             'body': JSON.stringify({
-                message: 'hello world',
+                message: 'Hello world!',
                 // location: ret.data.trim()
             })
         }

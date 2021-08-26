@@ -127,5 +127,7 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/osx,node,linux,windows
 
+# AWS SAM artifacts
 sam-app/.aws-sam/
 dynamo-db/.env
+dynamo-db/docker/dynamodb/shared-local-instance.db
