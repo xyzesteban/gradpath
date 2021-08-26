@@ -27,20 +27,18 @@ exports.lambdaHandler = async (event, context) => {
     })
 
     const docClient = new AWS.DynamoDB.DocumentClient();
-    
+
     let response = {};
     const params = {
         TableName: 'Course',
-        Item: {
-            'id': 12345,
-            'subject': 'CS',
-            'course_code': '3000'
+        Key: {
+            'id': 12345
         }
     };
 
     console.log("Request: " + JSON.stringify(event));
     try {
-        console.log("Adding a new item...");
+        console.log("Finding item with id: 12345");
         await docClient.put(params).promise();
         response = {
             'statusCode': 200,
@@ -48,13 +46,13 @@ exports.lambdaHandler = async (event, context) => {
                 'Content-Type': "application/json"
             },
             'body': JSON.stringify({
-                message: 'Successfully created item!'
+                message: 'Found item!'
             })
         }
     } catch (err) {
         console.error(err);
         response = {
-            'statusCode': 403,
+            'statusCode': 404,
             'headers': {
                 'Content-Type': "application/json"
             },

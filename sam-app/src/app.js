@@ -1,6 +1,10 @@
+"use strict"
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
-let response;
+
+require('dotenv').config();
+const AWS = require('aws-sdk');
+AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
 
 /**
  *
@@ -14,27 +18,29 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
+exports.lambdaHandler = async (event, context) => {
 
-const AWS = require('aws-sdk');
-require('dotenv').config();
+    AWS.config.update({ 
+        dynamodb: { 
+            endpoint: 'http://127.0.0.1:8000' 
+        } 
+    }) 
 
-AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
-if (process.env.AWS_SAM_LOCAL) { AWS.config.update({ dynamodb: { endpoint: LOCAL_DYNAMODB_ENDPOINT } }) }
+    let response = {};
 
-const docClient = new AWS.DynamoDB.DocumentClient();
-
-module.exports.handler = async (event, context) => {
+    console.log("Request: " + JSON.stringify(event));
     try {
-        // const ret = await axios(url);
         response = {
             'statusCode': 200,
+            'headers': {
+                'Content-Type': "application/json"
+            },
             'body': JSON.stringify({
-                message: 'Hello world!',
-                // location: ret.data.trim()
+                message: 'Hello world!'
             })
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return err;
     }
 
