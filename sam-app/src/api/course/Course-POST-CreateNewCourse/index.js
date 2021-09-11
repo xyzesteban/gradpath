@@ -22,7 +22,7 @@ exports.lambdaHandler = async (event, context) => {
 
     AWS.config.update({ 
         dynamodb: { 
-            endpoint: 'http://127.0.0.1:8000' 
+            endpoint: 'http://gradpath_db:8000' 
         } 
     })
 
@@ -32,7 +32,7 @@ exports.lambdaHandler = async (event, context) => {
     const params = {
         TableName: 'Course',
         Item: {
-            'id': 12345,
+            'id': '12345',
             'subject': 'CS',
             'course_code': '3000'
         }

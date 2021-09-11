@@ -13,7 +13,7 @@ Globals:
       AllowHeaders: "'*'"
       AllowOrigin: "'*'"
   Function:
-    Timeout: 3
+    Timeout: 25
     Environment:
       Variables:
         REGION: 'us-east-2'

@@ -22,7 +22,7 @@ exports.lambdaHandler = async (event, context) => {
 
     AWS.config.update({ 
         dynamodb: { 
-            endpoint: 'http://127.0.0.1:8000' 
+            endpoint: 'http://gradpath_db:8000' 
         } 
     })
 
@@ -32,14 +32,14 @@ exports.lambdaHandler = async (event, context) => {
     const params = {
         TableName: 'Course',
         Key: {
-            'id': 12345
+            'id': '12345'
         }
     };
 
     console.log("Request: " + JSON.stringify(event));
     try {
         console.log("Finding item with id: 12345");
-        await docClient.put(params).promise();
+        await docClient.get(params).promise();
         response = {
             'statusCode': 200,
             'headers': {
