@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
+Description:
   gradpath-sam
 
   SAM Template for Gradpath SIS Back-End
@@ -23,20 +23,19 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src
-      Handler: app.handler
+      Handler: app.lambdaHandler
       Runtime: nodejs14.x
-      Policies: AmazonDynamoDBReadOnlyAccess
-      PackageType: Image
+      PackageType: Zip
       Events:
         GetEvent:
           Type: Api
           Properties:
             Path: /
             Method: get
-    Metadata:
-      DockerTag: nodejs14.x-v1
-      DockerContext: ./src
-      Dockerfile: Dockerfile
+    #Metadata:
+    #  DockerTag: nodejs14.x-v1
+    #  DockerContext: ./src
+    #  Dockerfile: Dockerfile
 
   GradpathGetCourse:
     Type: AWS::Serverless::Function
@@ -45,17 +44,17 @@ Resources:
       Handler: index.lambdaHandler
       Runtime: nodejs14.x
       Policies: AmazonDynamoDBReadOnlyAccess
-      PackageType: Image
+      PackageType: Zip
       Events:
         GetEvent:
           Type: Api
           Properties:
             Path: /courses/{id}
             Method: get
-    Metadata:
-      DockerTag: nodejs14.x-v1
-      DockerContext: ./src
-      Dockerfile: Dockerfile
+    #Metadata:
+    #  DockerTag: nodejs14.x-v1
+    #  DockerContext: ./src/api/course/Course-GET-CourseByID
+    #  Dockerfile: Dockerfile
 
   GradpathAddCourse:
     Type: AWS::Serverless::Function
@@ -64,17 +63,19 @@ Resources:
       Handler: index.lambdaHandler
       Runtime: nodejs14.x
       Policies: AmazonDynamoDBFullAccess
-      PackageType: Image
+      PackageType: Zip
+      ImageConfig:
+        Command: [ "index.lambdaHandler1" ]
       Events:
         GetEvent:
           Type: Api
           Properties:
             Path: /courses
             Method: post
-    Metadata:
-      DockerTag: nodejs14.x-v1
-      DockerContext: ./src
-      Dockerfile: Dockerfile
+    #Metadata:
+    #  DockerTag: nodejs14.x-v1
+    #  DockerContext: ./src/api/course/Course-POST-CreateNewCourse
+    #  Dockerfile: Dockerfile
 
   # CourseTable:
   #   Type: AWS::DynamoDB::Table

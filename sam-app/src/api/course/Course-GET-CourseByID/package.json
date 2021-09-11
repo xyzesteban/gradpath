@@ -2,18 +2,13 @@
   "name": "gradpath-sam",
   "version": "1.0.0",
   "description": "Gradpath SIS Back-End (SAM App) for Development",
-  "main": "app.js",
+  "main": "index.js",
   "repository": "https://github.com/xyzes/gradpath",
   "author": "Esteban D. Espinoza",
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.27.0",
-    "axios": "^0.21.1",
-    "dotenv": "^10.0.0",
-    "uuid": "^8.3.2"
-  },
-  "scripts": {
-    "test": "mocha tests/unit/"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "aws-sdk": "^2.975.0",

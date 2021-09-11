@@ -2,7 +2,7 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 
-require('dotenv').config();
+// require('dotenv').config();
 const AWS = require('aws-sdk');
 AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
 

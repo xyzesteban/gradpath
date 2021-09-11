@@ -2,7 +2,7 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 
-require('dotenv').config();
+// require('dotenv').config();
 const AWS = require('aws-sdk');
 AWS.config.update({ region: process.env.REGION, apiVersion: "2012-08-10" });
 
@@ -37,6 +37,22 @@ exports.lambdaHandler = async (event, context) => {
             'course_code': '3000'
         }
     };
+
+    console.log("Request: " + JSON.stringify(event));
+    try {
+        response = {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': "application/json"
+            },
+            'body': JSON.stringify({
+                message: 'Hello world!'
+            })
+        }
+    } catch (err) {
+        console.error(err);
+        return err;
+    }
 
     console.log("Request: " + JSON.stringify(event));
     try {
