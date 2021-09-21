@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  dynamo:
+  gradpath_db:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     image: "amazon/dynamodb-local:latest"
     container_name: gradpath_db
@@ -11,10 +11,11 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+  
 
 networks:
   backend:
-    name: gradpath-sam-backend
+    name: gradpath
 
 volumes:
   dynamodata: {}

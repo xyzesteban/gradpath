@@ -1,7 +1,7 @@
 {
   "name": "gradpath-sam",
   "version": "1.0.0",
-  "description": "Gradpath SIS Back-End (SAM App) for Development",
+  "description": "Gradpath SIS + LMS Back-End (SAM App) for Development",
   "main": "index.js",
   "repository": "https://github.com/xyzes/gradpath",
   "author": "Esteban D. Espinoza",

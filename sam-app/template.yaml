@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description:
   gradpath-sam
 
-  SAM Template for Gradpath SIS Back-End
+  SAM Template for Gradpath SIS + LMS Back-End
   
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -19,24 +19,6 @@ Globals:
         REGION: 'us-east-2'
 
 Resources:
-  Index:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: src
-      Handler: app.lambdaHandler
-      Runtime: nodejs14.x
-      PackageType: Zip
-      Events:
-        GetEvent:
-          Type: Api
-          Properties:
-            Path: /
-            Method: get
-    #Metadata:
-    #  DockerTag: nodejs14.x-v1
-    #  DockerContext: ./src
-    #  Dockerfile: Dockerfile
-
   GradpathGetCourse:
     Type: AWS::Serverless::Function
     Properties:
@@ -45,16 +27,14 @@ Resources:
       Runtime: nodejs14.x
       Policies: AmazonDynamoDBReadOnlyAccess
       PackageType: Zip
+      ImageConfig:
+        Command: [ "index.lambdaHandler1" ]
       Events:
         GetEvent:
           Type: Api
           Properties:
             Path: /courses/{id}
             Method: get
-    #Metadata:
-    #  DockerTag: nodejs14.x-v1
-    #  DockerContext: ./src/api/course/Course-GET-CourseByID
-    #  Dockerfile: Dockerfile
 
   GradpathAddCourse:
     Type: AWS::Serverless::Function
@@ -65,30 +45,12 @@ Resources:
       Policies: AmazonDynamoDBFullAccess
       PackageType: Zip
       ImageConfig:
-        Command: [ "index.lambdaHandler1" ]
+        Command: [ "index.lambdaHandler2" ]
       Events:
         GetEvent:
           Type: Api
           Properties:
             Path: /courses
             Method: post
-    #Metadata:
-    #  DockerTag: nodejs14.x-v1
-    #  DockerContext: ./src/api/course/Course-POST-CreateNewCourse
-    #  Dockerfile: Dockerfile
-
-  # CourseTable:
-  #   Type: AWS::DynamoDB::Table
-  #   Properties:
-  #     TableName: Course
-  #     AttributeDefinitions:
-  #       - AttributeName: id
-  #         AttributeType: S
-  #     KeySchema:
-  #       - AttributeName: id
-  #         KeyType: HASH
-  #     ProvisionedThroughput:
-  #       ReadCapacityUnits: 2
-  #       WriteCapacityUnits: 1
 
 
